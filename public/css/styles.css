@@ -1,7 +1,14 @@
+html,
+body {
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png");
+}
+
 .container-fluid {
     padding-top: 70px;
     padding-bottom: 70px;
 }
+
 .navbar {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -11,25 +18,56 @@
     font-size: 12px;
     letter-spacing: 5px;
 }
-.navbar-nav  li a:hover {
+
+.navbar-nav li a:hover {
     color: #1abc9c !important;
 }
 
+.navbar-brand a {
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.navbar-brand a:hover {
+    transform: scale(1.1);
+}
+
+
+.navbar-brand a:hover {
+    text-decoration: none;
+    color: #1abc9c;
+}
+
 .footer-padding {
-	padding-bottom: 60px;
+    padding-bottom: 60px;
 }
 
 .footer {
-	position: absolute;
-	text-align: center;
-	bottom: 0;
-	width: 100%;
-	height: 60px;
-	background-color: #1abc9c;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #1abc9c;
 }
 
 .footer p {
-	margin-top: 25px;
-	font-size: 12px;
-  color: #fff;
+    margin-top: 25px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.btn-submit {
+    margin-top: 12px;
+}
+
+
+.compose-heading {
+    margin-bottom: 32px;
+}
+
+.compose-form>label,
+input,
+textarea {
+    margin-bottom: 12px;
 }
