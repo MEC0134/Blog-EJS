@@ -6,10 +6,10 @@
     <form action="/compose" method="post">
         <div class="compose-form">
             <label for="postTitle">Post Title</label>
-            <input type="text" name="postTitle" class="form-control"></input>
+            <input type="text" name="postTitle" class="form-control" required></input>
             <label for="postText">Post Content</label>
             <textarea type="text" name="postText" class="form-control" id="exampleFormControlTextarea1"
-                rows="5"></textarea>
+                rows="5" required></textarea>
         </div>
         <button type="submit" name="btn" class="btn btn-primary btn-submit">Publish</button>
     </form>

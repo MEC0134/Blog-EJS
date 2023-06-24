@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const _ = require('lodash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const { Article } = require('./db.js');
 
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -24,30 +25,31 @@ app.use(session({
 }));
 
 
-let postsArr = [];
-
 
 app.get('/', (req, res) => {
 
-  if (!req.cookies.visited) {
-    res.cookie('visited', 'true');
+  Article.find({})
+    .then(foundArticles => {
+      if (foundArticles.length > 0) {
+        if (!req.cookies.visited) {
+          res.cookie('visited', 'true');
 
-    
-  res.render("home", {
-    startingContent: homeStartingContent,
-    posts: postsArr,
-    _ : _,
-    showGuide: true 
-  });
-  } else {
-    res.render("home", {
-      startingContent: homeStartingContent,
-      posts: postsArr,
-      _ : _,
-      showGuide: false 
-    });
-  }
-
+          res.render("home", {
+            startingContent: homeStartingContent,
+            posts: foundArticles,
+            _: _,
+            showGuide: true
+          });
+        } else {
+          res.render("home", {
+            startingContent: homeStartingContent,
+            posts: foundArticles,
+            _: _,
+            showGuide: false
+          });
+        }
+      }
+    })
 });
 
 
@@ -70,17 +72,33 @@ app.post('/compose', (req, res) => {
     title: req.body.postTitle,
     content: req.body.postText
   };
-  postsArr.push(post);
+
+  const article = new Article({
+    articleTitle: post.title,
+    articleContent: post.content
+  });
+
+
+  article.save();
   res.redirect('/');
 });
 
 
-app.get('/post/:postName', (req, res) => {
-  const reqTitle = req.params.postName;
-  const foundPost = postsArr.find(post => _.kebabCase(post.title) === reqTitle);
-  if (foundPost) {
-    res.render("post", { postTitle: foundPost.title, postContent: foundPost.content });
-  }
+app.get('/post/:postId', (req, res) => {
+  const reqId = req.params.postId;
+
+  Article.findOne({_id: reqId})
+    .then(foundArticle => {
+      if(foundArticle) {
+        res.render("post", { 
+          postTitle: foundArticle.articleTitle, 
+          postContent: foundArticle.articleContent
+        });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
 });
 
 

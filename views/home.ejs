@@ -3,35 +3,35 @@
 
     <h1>Home</h1>
 
-
     <p>
         <%= startingContent %>
     </p>
 
     <div class="main-div">
+
         <% posts.forEach(post=> { %>
             <h2>
-                <%= post.title %>
+                <%= post.articleTitle %>
             </h2>
             <p>
-                <%= post.content.slice(0, 100)+'...' %>
+                <%= post.articleContent.slice(0, 100)+'...' %>
             </p>
-            <a href="/post/<%=_.kebabCase(post.title)%>">Read More</a>
+            <a href="/post/<%=post._id%>">Read More</a>
             <% }); %>
 
-            <% if(showGuide) { %>
-            <div id="guide-container">
-                <div class="guide-card">
-                    <h2>App Usage Guide</h2>
-                    <p>Instructions on how to use the app:</p>
-                    <ul>
-                        <li>Click on Journal at the top to write a blog.</li>
-                        <li>All your articles will appear on the home page.</li>
-                        <li>Click on 'Read More' to access the full article.</li>
-                    </ul>
-                </div>
-            </div>  
-            <% } %>  
+                <% if(showGuide) { %>
+                    <div id="guide-container">
+                        <div class="guide-card">
+                            <h2>App Usage Guide</h2>
+                            <p>Instructions on how to use the app:</p>
+                            <ul>
+                                <li>Click on Journal at the top to write a blog.</li>
+                                <li>All your articles will appear on the home page.</li>
+                                <li>Click on 'Read More' to access the full article.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <% } %>
 
     </div>
 
